@@ -52,92 +52,117 @@ int arr[5][5] = {{' ', '|', ' ', '|', ' '},
 int counter = 0;
 int main()
 {
+    int reset_flag = 0;
     int winner = 0;
-    Player Player1;
-    Player Player2;
+
     int mode = -1;
     // initialization
+
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    printf("Player1: x\nPlayer2: o");
+    printf("Player1: x  Player2: o");
     SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     GoToXY(50, 0);
     printf("Tic-Tac-Toe");
 
     GoToXY(42, 1);
     printf("1:Play Against Bot  2: 1vs1");
-    GoToXY(42, 2);
-    printf("Select mode: ");
-    scanf("%d", &mode);
-    // CLEAR Line
-    ClearLine(2);
 
-    switch (mode)
+    do
     {
-    case 1:
-        GoToXY(48, 2);
-        printf("Play Against Bot", mode);
-        break;
-    case 2:
-        GoToXY(54, 2);
-        printf("1vs1", mode);
-    }
 
-    if (mode == 2)
-    {
         do
         {
-            setPlayerXY(PLAYER1);
-            updateMatrix();
-            winner = checkWinner();
-            GoToXY(0, 30);
-            printf("Counter= %d\n", counter);
-            printf("Winner= %d\n", winner);
-            if (winner)
+            GoToXY(42, 2);
+            printf("Select mode: ");
+            scanf("%d", &mode);
+            if (mode == 1 || mode == 2)
             {
                 break;
             }
-            if (counter == 9)
+            else
             {
-                break;
+                GoToXY(45, 5);
+                SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
+                printf("Wrong mode try again !!");
+                SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                delay(1);
+                ClearLine(5);
             }
-            setPlayerXY(PLAYER2);
-            updateMatrix();
-            GoToXY(0, 30);
-            printf("Counter= %d\n", counter);
-            printf("Winner= %d\n", winner);
-            winner = checkWinner();
-            GoToXY(0, 30);
-            printf("Counter= %d\n", counter);
-            printf("Winner= %d\n", winner);
-            if (winner)
-            {
-                break;
-            }
-            GoToXY(0, 30);
-            printf("Counter= %d\n", counter);
-            printf("Winner= %d\n", winner);
 
-        } while (TRUE);
-    }
-    switch (winner)
-    {
-    case 1:
-        GoToXY(54, 7);
-        printf("Player 1 Wins !!!!!!");
-        break;
-    case 2:
-        GoToXY(54, 7);
-        printf("Player 2 Wins !!!!!!");
-        break;
-    default:
-        ClearLine(7);
-        GoToXY(54, 7);
-        printf("Draw!!!!!!");
-    }
+        } while (1);
+        // CLEAR Line
 
-    while (1)
-    {
-    }
+        ClearLine(1);
+        ClearLine(2);
+
+        switch (mode)
+        {
+        case 1:
+            GoToXY(48, 2);
+            printf("Play Against Bot", mode);
+            break;
+        case 2:
+            GoToXY(54, 2);
+            printf("1vs1", mode);
+        }
+
+        if (mode == 2)
+        {
+            do
+            {
+                setPlayerXY(PLAYER1);
+                updateMatrix();
+                winner = checkWinner();
+                GoToXY(0, 30);
+                printf("Counter= %d\n", counter);
+                printf("Winner= %d\n", winner);
+                if (winner)
+                {
+                    break;
+                }
+                if (counter == 9)
+                {
+                    break;
+                }
+                setPlayerXY(PLAYER2);
+                updateMatrix();
+                GoToXY(0, 30);
+                printf("Counter= %d\n", counter);
+                printf("Winner= %d\n", winner);
+                winner = checkWinner();
+                GoToXY(0, 30);
+                printf("Counter= %d\n", counter);
+                printf("Winner= %d\n", winner);
+                if (winner)
+                {
+                    break;
+                }
+                GoToXY(0, 30);
+                printf("Counter= %d\n", counter);
+                printf("Winner= %d\n", winner);
+
+            } while (TRUE);
+        }
+        switch (winner)
+        {
+        case 1:
+            GoToXY(54, 7);
+            printf("Player 1 Wins !!!!!!");
+            break;
+        case 2:
+            GoToXY(54, 7);
+            printf("Player 2 Wins !!!!!!");
+            break;
+        default:
+            ClearLine(7);
+            GoToXY(54, 7);
+            printf("Draw!!!!!!");
+        }
+        GoToXY(45, 5);
+        printf("Restart?: yes:0     no:1");
+        scanf("%d", &reset_flag);
+
+    } while (reset_flag == 0);
 }
 
 void GoToXY(int x, int y)
