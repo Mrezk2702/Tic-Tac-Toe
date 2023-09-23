@@ -24,6 +24,7 @@ void updateMatrix(void);
 void setPlayerXY(ePlayerNum NUM);
 void delay(int number_of_seconds);
 char checkWinner();
+void clearMatrix(void);
 /***
  *
  *  x|x|o
@@ -69,9 +70,14 @@ int main()
 
     do
     {
+        ClearLine(4);
+        ClearLine(5);
+        ClearLine(6);
+        ClearLine(7);
 
         do
         {
+            ClearLine(2);
             GoToXY(42, 2);
             printf("Select mode: ");
             scanf("%d", &mode);
@@ -159,8 +165,13 @@ int main()
             printf("Draw!!!!!!");
         }
         GoToXY(45, 5);
-        printf("Restart?: yes:0     no:1");
+        printf("Restart: 0     Quit:1");
+        GoToXY(45, 6);
+        printf("Your answer: ");
         scanf("%d", &reset_flag);
+        clearMatrix();
+        counter=0;
+        winner=0;
 
     } while (reset_flag == 0);
 }
@@ -189,6 +200,21 @@ void updateMatrix(void)
         {
             printf("%c", arr[row][col]);
         }
+    }
+}
+
+void clearMatrix(void)
+{
+    for (int row = 0; row < 3; row++)
+    {
+        for (int col = 0; col < 3; col++)
+        {
+            arr[row*2][col*2]=' ';
+        }
+    }
+    for(int i=0;i<5;i++)
+    {
+        ClearLine(10+i);
     }
 }
 
@@ -252,6 +278,7 @@ void setPlayerXY(ePlayerNum Num)
                 ClearLine(5);
             }
         }
+
 
     } while (flag == 0);
 }
